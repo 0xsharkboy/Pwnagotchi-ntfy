@@ -3,7 +3,7 @@ import requests
 
 import pwnagotchi.plugins as plugins
 
-class NtfyNotifier(plugins.Plugin):
+class ntfy(plugins.Plugin):
     __author__ = '0xSharkboy'
     __version__ = '1.0.0'
     __license__ = 'GPL3'
@@ -14,12 +14,15 @@ class NtfyNotifier(plugins.Plugin):
         self.url = None
 
     def on_loaded(self):
+        if 'ntfy_url' not in self.options:
+            self.options["ntfy_url"] = ""
+
         if self.options["ntfy_url"]:
             self.url = f'https://{self.options["ntfy_url"]}'
-            logging.info(f"[Ntfy Notifier]: plugin loaded with the url: {self.url}")
+            logging.info(f'[ntfy] plugin loaded with the url: {self.options["ntfy_url"]}')
         else:
             self.url = None
-            logging.warning("[Ntfy Notifier]: No URL specified! Plugin will not send notifications.")
+            logging.warning('[ntfy] plugin loaded but no URL specified! Plugin will not send notifications.')
 
     def _send_notification(self, title, message):
         if not self.url:
@@ -34,4 +37,14 @@ class NtfyNotifier(plugins.Plugin):
                 data=message
             )
         except:
+            logging.warning('[ntfy] Notification not sent.')
             pass
+
+    def on_ready(self, agent):
+        self._send_notification('Pwnagotchi Ready', 'Your pwnagotchi is ready to pwn!')
+
+    def on_sleep(self, agent, t):
+        self._send_notification('Pwnagotchi Sleeping', f'Your pwnagotchi is going to sleep for {t} seconds.')
+    
+    def on_ai_ready(self, agent):
+        self._send_notification('AI Ready', f'Your pwnagotchi AI mode is ready!')
