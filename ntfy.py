@@ -42,9 +42,6 @@ class ntfy(plugins.Plugin):
 
     def on_ready(self, agent):
         self._send_notification('Pwnagotchi Ready', 'Your pwnagotchi is ready to pwn!')
-
-    def on_sleep(self, agent, t):
-        self._send_notification('Pwnagotchi Sleeping', f'Your pwnagotchi is going to sleep for {t} seconds.')
     
     def on_ai_ready(self, agent):
         self._send_notification('AI Ready', f'Your pwnagotchi AI mode is ready!')
