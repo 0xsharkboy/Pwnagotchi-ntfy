@@ -29,7 +29,6 @@ class ntfy(plugins.Plugin):
             self.url = f'https://{self.options["ntfy_url"]}'
             logging.info(f'[ntfy] plugin loaded with the url: {self.options["ntfy_url"]}')
         else:
-            self.url = None
             logging.warning('[ntfy] plugin loaded but no URL specified! Plugin will not send notifications.')
 
     def _send_notification(self, title, message):
