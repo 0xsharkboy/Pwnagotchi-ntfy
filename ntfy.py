@@ -13,6 +13,7 @@ class ntfy(plugins.Plugin):
         self.options = dict()
         self.url = None
         self.priority = None
+        self.name = None
 
     def _check_options(self):
         if 'ntfy_url' not in self.options:
@@ -49,10 +50,12 @@ class ntfy(plugins.Plugin):
             pass
 
     def on_ready(self, agent):
-        self._send_notification('Pwnagotchi Ready', 'Your pwnagotchi is ready to pwn!')
+        if not self.name:
+            self.name = agent._config["main"]["name"]
+        self._send_notification(f'{self.name} is ready', 'Let\'s pwn the world!')
     
     def on_ai_ready(self, agent):
-        self._send_notification('AI Ready', f'Your pwnagotchi AI mode is ready!')
+        self._send_notification('AI is ready', f'{self.name} is smart now!')
 
     def on_handshake(self, agent, filename, access_point, client_station):
-        self._send_notification('Pwned!', f'Your Pwnagotchi has captured a new handshake from {access_point["hostname"]}')
+        self._send_notification('Pwned!', f'{self.name} has captured a new handshake from {access_point["hostname"]}')
