@@ -12,10 +12,18 @@ class ntfy(plugins.Plugin):
     def __init__(self):
         self.options = dict()
         self.url = None
+        self.priority = None
 
-    def on_loaded(self):
+    def _check_options(self):
         if 'ntfy_url' not in self.options:
             self.options["ntfy_url"] = ""
+        if 'priority' not in self.options or not (1 <= self.options["priority"] <= 5):
+            self.options["priority"] = 3
+
+
+    def on_loaded(self):
+        self._check_options()
+        self.priority = self.options["priority"]
 
         if self.options["ntfy_url"]:
             self.url = f'https://{self.options["ntfy_url"]}'
@@ -32,7 +40,8 @@ class ntfy(plugins.Plugin):
             requests.post(
                 self.url,
                 headers={
-                    'Title': title
+                    'Title': title,
+                    'Priority' : str(self.priority)
                 },
                 data=message
             )
