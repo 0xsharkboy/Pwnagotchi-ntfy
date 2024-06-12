@@ -45,3 +45,6 @@ class ntfy(plugins.Plugin):
     
     def on_ai_ready(self, agent):
         self._send_notification('AI Ready', f'Your pwnagotchi AI mode is ready!')
+
+    def on_handshake(self, agent, filename, access_point, client_station):
+        self._send_notification('Pwned!', f'Your Pwnagotchi has captured a new handshake from {access_point["hostname"]}')
