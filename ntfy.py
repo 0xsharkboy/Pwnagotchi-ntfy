@@ -21,7 +21,6 @@ class ntfy(plugins.Plugin):
         if 'priority' not in self.options or not (1 <= self.options["priority"] <= 5):
             self.options["priority"] = 3
 
-
     def on_loaded(self):
         self._check_options()
         self.priority = self.options["priority"]
@@ -52,10 +51,17 @@ class ntfy(plugins.Plugin):
     def on_ready(self, agent):
         if not self.name:
             self.name = agent._config["main"]["name"]
+
         self._send_notification(f'{self.name} is ready', 'Let\'s pwn the world!')
     
     def on_ai_ready(self, agent):
-        self._send_notification('AI is ready', f'{self.name} is smart now!')
+        self._send_notification('AI is ready', f'Let\'s learn together!')
+
+    def on_deauthentication(self, agent, access_point, client_station):
+        client = client_station.get("hostname", client_station["mac"])
+        access = access_point.get("hostname", access_point["mac"])
+
+        self._send_notification('Deauth!', f'{self.name} is deauthenticating {client} from {access}')
 
     def on_handshake(self, agent, filename, access_point, client_station):
         self._send_notification('Pwned!', f'{self.name} has captured a new handshake from {access_point["hostname"]}')
