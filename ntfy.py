@@ -70,4 +70,6 @@ class ntfy(plugins.Plugin):
         self._send_notification('Deauth!', f'{self.name} is deauthenticating {client} from {access}')
 
     def on_handshake(self, agent, filename, access_point, client_station):
-        self._send_notification('Pwned!', f'{self.name} has captured a new handshake from {access_point["hostname"]}')
+        access = access_point.get("hostname", access_point["mac"])
+
+        self._send_notification('Pwned!', f'{self.name} has captured a new handshake from {access}')
