@@ -54,7 +54,14 @@ class ntfy(plugins.Plugin):
         self._send_notification(f'{self.name} woke up', 'Let\'s pwn the world!')
     
     def on_ai_ready(self, agent):
-        self._send_notification('AI is ready', f'Let\'s learn together!')
+        self._send_notification('AI is ready', 'Let\'s learn together!')
+
+    def on_association(self, agent, access_point):
+        ssid = access_point.get("hostname", '')
+        bssid = access_point.get("mac", '')
+        what = ssid if ssid != '' and ssid != '<hidden>' else bssid
+
+        self._send_notification('Hey!', f'{self.name} is associating to {what}')
 
     def on_deauthentication(self, agent, access_point, client_station):
         client = client_station.get("hostname", client_station["mac"])
