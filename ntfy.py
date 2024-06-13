@@ -44,15 +44,14 @@ class ntfy(plugins.Plugin):
                 },
                 data=message
             )
-        except:
-            logging.warning('[ntfy] Notification not sent.')
-            pass
+        except requests.RequestException as e:
+            logging.warning(f'[ntfy] notification not sent due to: {e}')
 
     def on_ready(self, agent):
         if not self.name:
             self.name = agent._config["main"]["name"]
 
-        self._send_notification(f'{self.name} is ready', 'Let\'s pwn the world!')
+        self._send_notification(f'{self.name} woke up', 'Let\'s pwn the world!')
     
     def on_ai_ready(self, agent):
         self._send_notification('AI is ready', f'Let\'s learn together!')
