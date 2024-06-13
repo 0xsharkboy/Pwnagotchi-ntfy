@@ -4,7 +4,7 @@ import requests
 import pwnagotchi.plugins as plugins
 
 class ntfy(plugins.Plugin):
-    __author__ = '0xSharkboy'
+    __author__ = '0xsharkboy'
     __version__ = '1.0.0'
     __license__ = 'GPL3'
     __description__ = 'A plugin that sends notifications to your ntfy client'
