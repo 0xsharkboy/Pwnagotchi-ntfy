@@ -3,11 +3,19 @@ import requests
 
 import pwnagotchi.plugins as plugins
 
+'''
+Here's an example configuration for this plugin:
+main.plugins.ntfy.enabled = true
+main.plugins.ntfy.ntfy_url = "ntfy.sh/[ntfylink]"
+# Defines the priority of the notifications on your devices (see: https://docs.ntfy.sh/publish/#message-priority)
+main.plugins.ntfy.priority = 3
+'''
+
 class ntfy(plugins.Plugin):
     __author__ = '0xsharkboy'
     __version__ = '1.0.0'
     __license__ = 'GPL3'
-    __description__ = 'A plugin that sends notifications to your ntfy client'
+    __description__ = 'A plugin that sends notifications to your devices through ntfy services.'
 
     def __init__(self):
         self.options = dict()
