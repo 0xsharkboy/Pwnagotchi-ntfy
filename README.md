@@ -25,6 +25,6 @@ main.plugins.ntfy.priority = 3
 Since this plugin needs internet connection I higly recommend you to use [bt-tether](https://github.com/evilsocket/pwnagotchi/blob/master/pwnagotchi/plugins/default/bt-tether.py) plugin.
 
 ## To-do
- - [ ] Notify on new peer/peer lost
+ - [x] Notify on new peer/peer lost
  - [ ] Save events until pwnagotchi is online
  - [ ] Notify session stats on shutdown

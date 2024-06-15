@@ -71,6 +71,12 @@ class ntfy(plugins.Plugin):
 
         self._send_notification('Hey!', f'{self.name} is associating to {what}')
 
+    def on_peer_detected(self, agent, peer):
+        self._send_notification('Peer Detected!', f'{self.name} detected a new peer: {peer}')
+
+    def on_peer_lost(self, agent, peer):
+        self._send_notification('Peer Lost', f'{self.name} lost contact with peer: {peer}')
+
     def on_deauthentication(self, agent, access_point, client_station):
         client = client_station.get("hostname", client_station["mac"])
         access = access_point.get("hostname", access_point["mac"])
