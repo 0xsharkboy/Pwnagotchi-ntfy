@@ -11,6 +11,8 @@ main.plugins.ntfy.enabled = true
 main.plugins.ntfy.ntfy_url = "ntfy.sh/[ntfytopic]"
 # Defines the priority of the notifications on your devices (see: https://docs.ntfy.sh/publish/#message-priority)
 main.plugins.ntfy.priority = 3
+# Should the plugin cache notifications as long as the pwnagotchi is offline ?
+main.plugins.ntfy.cache_notifs = false
 ```
 3. Restart your device and enjoy your ntfy plugin !
 
@@ -26,5 +28,5 @@ Since this plugin needs internet connection I higly recommend you to use [bt-tet
 
 ## To-do
  - [x] Notify on new peer/peer lost
- - [ ] Save events until pwnagotchi is online
+ - [x] Save events until pwnagotchi is online
  - [ ] Notify session stats on shutdown

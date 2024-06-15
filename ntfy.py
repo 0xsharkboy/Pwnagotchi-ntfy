@@ -9,6 +9,8 @@ main.plugins.ntfy.enabled = true
 main.plugins.ntfy.ntfy_url = "ntfy.sh/[ntfylink]"
 # Defines the priority of the notifications on your devices (see: https://docs.ntfy.sh/publish/#message-priority)
 main.plugins.ntfy.priority = 3
+# Should the plugin cache notifications as long as the pwnagotchi is offline ?
+main.plugins.ntfy.cache_notifs = false
 '''
 
 class ntfy(plugins.Plugin):
@@ -21,6 +23,8 @@ class ntfy(plugins.Plugin):
         self.options = dict()
         self.url = None
         self.priority = None
+        self.cache = None
+        self.queue = []
         self.name = None
 
     def _check_options(self):
@@ -28,10 +32,13 @@ class ntfy(plugins.Plugin):
             self.options["ntfy_url"] = ""
         if 'priority' not in self.options or not (1 <= self.options["priority"] <= 5):
             self.options["priority"] = 3
+        if 'cache_notifs' not in self.options:
+            self.options["cache_notifs"] = False
 
     def on_loaded(self):
         self._check_options()
         self.priority = self.options["priority"]
+        self.cache = self.options["cache_notifs"]
 
         if self.options["ntfy_url"]:
             self.url = f'https://{self.options["ntfy_url"]}'
@@ -53,7 +60,18 @@ class ntfy(plugins.Plugin):
                 data=message
             )
         except requests.RequestException as e:
+            if self.cache:
+                self.queue.append((title, message))
+
             logging.warning(f'[ntfy] notification not sent due to: {e}')
+
+    def on_internet_available(self, agent):
+        if not self.queue:
+            return
+        
+        for _ in range(len(self.queue)):
+            title, message = self.queue.pop(0)
+            self._send_notification(title, message)
 
     def on_ready(self, agent):
         if not self.name:
