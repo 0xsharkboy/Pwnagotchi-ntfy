@@ -21,7 +21,6 @@ main.plugins.ntfy.cache_notifs = false
  - AI Ready
  - Deauth
  - Handshake capture
- - Association
 
 ## Recommandation
 Since this plugin needs internet connection I higly recommend you to use [bt-tether](https://github.com/evilsocket/pwnagotchi/blob/master/pwnagotchi/plugins/default/bt-tether.py) plugin.

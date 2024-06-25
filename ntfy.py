@@ -82,13 +82,6 @@ class ntfy(plugins.Plugin):
     def on_ai_ready(self, agent):
         self._send_notification('AI is ready', 'Let\'s learn together!')
 
-    def on_association(self, agent, access_point):
-        ssid = access_point.get("hostname", '')
-        bssid = access_point.get("mac", '')
-        what = ssid if ssid != '' and ssid != '<hidden>' else bssid
-
-        self._send_notification('Hey!', f'{self.name} is associating to {what}')
-
     def on_peer_detected(self, agent, peer):
         self._send_notification('Peer Detected!', f'{self.name} detected a new peer: {peer}')
 
